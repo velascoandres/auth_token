@@ -114,7 +114,14 @@ class LoginPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50),
             margin: EdgeInsets.symmetric(vertical: 30),
             decoration: BoxDecoration(
-                color: Colors.white,
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color.fromRGBO(63, 63, 156, 1.0),
+                    Colors.red,
+                  ],
+                ),
                 borderRadius: BorderRadius.circular(5.0),
                 boxShadow: [
                   BoxShadow(
@@ -128,9 +135,7 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Ingreso',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 SizedBox(
                   height: 60.0,
@@ -164,6 +169,7 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: TextField(
             keyboardType: TextInputType.emailAddress,
+            style: TextStyle(color: Colors.white),
             onChanged: bloc.changeEmail,
             decoration: InputDecoration(
               icon: Icon(
@@ -173,6 +179,8 @@ class LoginPage extends StatelessWidget {
               hintText: 'ejemplo@correo.com',
               labelText: 'Correo eléctronico',
               errorText: snapshot.error,
+              labelStyle: TextStyle(color: Colors.white),
+              errorStyle: TextStyle(color: Colors.yellow),
             ),
           ),
         );
@@ -188,13 +196,16 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: TextField(
             onChanged: bloc.changePassword,
+            style: TextStyle(color: Colors.white),
             obscureText: true,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.security,
                 color: Colors.deepPurple,
               ),
+              errorStyle: TextStyle(color: Colors.yellow),
               labelText: 'Contraseña',
+              labelStyle: TextStyle(color: Colors.white),
               errorText: snapshot.error,
             ),
           ),
