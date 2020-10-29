@@ -1,12 +1,19 @@
 import 'dart:async';
 
-class LoginBloc {
-  final _emailController = StreamController<String>.broadcast();
-  final _passwordController = StreamController<String>.broadcast();
+import 'package:rxdart/rxdart.dart';
+
+import 'validators.dart';
+
+class LoginBloc with Validators {
+  final _emailController = BehaviorSubject<String>();
+  final _passwordController = BehaviorSubject<String>();
 
   // Recuperar los datos del stream
-  get emailStream => _emailController.stream;
-  get passwordStream => _passwordController.stream;
+  get emailStream => _emailController.stream.transform(validarEmail);
+  get passwordStream => _passwordController.stream.transform(validarPassword);
+
+  Stream<bool> get formValidStream =>
+      Rx.combineLatest2(emailStream, passwordStream, (email, password) => true);
 
   // Insertar valores al stream
   Function(String) get changeEmail => _emailController.sink.add;
@@ -17,5 +24,3 @@ class LoginBloc {
     _passwordController?.close();
   }
 }
-
-

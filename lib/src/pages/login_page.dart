@@ -174,7 +174,7 @@ class LoginPage extends StatelessWidget {
               ),
               hintText: 'ejemplo@correo.com',
               labelText: 'Correo eléctronico',
-              counterText: snapshot.data,
+              errorText: snapshot.error,
             ),
           ),
         );
@@ -197,6 +197,7 @@ class LoginPage extends StatelessWidget {
                 color: Colors.deepPurple,
               ),
               labelText: 'Contraseña',
+              errorText: snapshot.error,
             ),
           ),
         );
@@ -205,18 +206,24 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _crearBoton(LoginBloc bloc) {
-    return RaisedButton(
-      onPressed: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15.0),
-        child: Text('Ingresar'),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      elevation: 0.0,
-      color: Colors.deepPurple,
-      textColor: Colors.white,
+    return StreamBuilder(
+      stream: bloc.formValidStream,
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        final estaValido = snapshot.hasData;
+        return RaisedButton(
+          onPressed: estaValido ? () {} : null,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15.0),
+            child: Text('Ingresar'),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          elevation: 0.0,
+          color: Colors.deepPurple,
+          textColor: Colors.white,
+        );
+      },
     );
   }
 }
