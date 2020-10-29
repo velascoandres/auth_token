@@ -12,8 +12,6 @@ class Posicion {
 }
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,7 +209,7 @@ class LoginPage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         final estaValido = snapshot.hasData;
         return RaisedButton(
-          onPressed: estaValido ? () {} : null,
+          onPressed: estaValido ? () => _login(bloc, context) : null,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15.0),
             child: Text('Ingresar'),
@@ -225,5 +223,11 @@ class LoginPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  _login(LoginBloc bloc, BuildContext context) {
+    print('Email: ${bloc.email}');
+    print('Pass: ${bloc.password}');
+    Navigator.pushReplacementNamed(context, 'home');
   }
 }
